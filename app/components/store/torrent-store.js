@@ -8,87 +8,93 @@ import {EventEmitter} from 'events';
 import * as ActionTypes from '../action/types';
 import decode from 'parse-torrent-file';
 import {Buffer} from 'buffer';
+import assign from 'xtend';
+import {Promise} from 'es6-promise';
 
 const CHANGE = 'change';
 const file_type = 'application/x-bittorrent';
 
-let file = null;
-let correct = true;
-let raw = null;
-let parsed = null;
-
-/**
- * Обрабатываем выбор файлов
- */
-function handleFileSelect(filestore, action) {
-  correct = action.file.type === file_type;
-  filestore.add(correct ? action.file : null);
+const TorrentStore = assign({}, EventEmitter.prototype, {
+  /* private */
   
-  action.file = action.type = null; // clear
-}
-
-
-function handleReadFile(store, cb) {
-  if (!file) {
-    return;
-  }
+  _file: null,
+  _correct: true,
+  _parsed: null,
+  _readState: null,
   
-  var reader = new FileReader();
-  reader.onload = function (e) {
-    parsed = decode(new Buffer(e.target.result));
-    console.log(parsed);
+  _handleFileSelect(file) {
+    this._correct = file.type === file_type;
+    this._file = this._correct ? file : null;
     
-    cb();
-  };
+    this._readState = new Promise((resolve, reject) => {
+      if (!this._file) {
+        return reject(new Error('Incorrect file'));  
+      }
+      
+      this._handleReadFile(this._file, (e, data) => {
+        if (e) {
+          return reject(e);
+        }
+        
+        this._parsed = data;
+        
+        this.emit(CHANGE);
+        resolve(data);
+      })
+    });
+  },
   
-  reader.readAsArrayBuffer(file);
-}
-
-class FileStore extends EventEmitter {
-  add(f) {
-    file = f;    
+  _handleReadFile(file, cb) {
+    var reader = new FileReader();
     
-    handleReadFile(this, () => {
-      this.emit(CHANGE);
-    })
-  }
+    // TODO: remove event handlers
+    
+    reader.onload = function(e) {
+      let parsed = decode(new Buffer(e.target.result));
+
+      console.log(parsed);
+      cb(null, parsed);
+    }
+    
+    reader.onerror = cb;
+    
+    reader.readAsArrayBuffer(file);
+    return reader;
+  },
   
-  clear() {
-    file = raw = parsed = null;
-    this.emit(CHANGE);
-  }
+  /* public */
+  
+  waitForReadFile(success, error) {
+    return this._readState.then(success, error);
+  },
   
   getFiles() {
+    let {_file: file, _correct: correct} = this;
+    
     return { file, correct };
-  }
-  
-  getRaw() {
-    return raw;
-  }
+  },
   
   getParsed() {
-    return parsed;
-  }
+    return this._parsed;
+  },
   
   sub(cb) {
     this.on(CHANGE, cb);
-  }
+  },
   
   off(cb) {
     return cb ? this.removeListener(CHANGE, cb) : this.removeAllListeners(CHANGE);
   }
-}
+});
 
-const store = new FileStore();
-
-TorrentDispatcher.register(function (action) {
+TorrentStore.dispatchToken = TorrentDispatcher.register(function (action) {
   switch (action.type) {
     case ActionTypes.FILE_SELECT:
-      handleFileSelect(store, action);
+      TorrentStore._handleFileSelect(action.file);
       break;
     default:
       break;
   }
 });
 
-export default store;
+export default TorrentStore;
