@@ -16,6 +16,7 @@ import babelify from 'babelify';
 import bowerify from 'debowerify';
 import proxy from 'http-proxy-middleware';
 import {log} from "gulp-util";
+import historyApiFallback from 'connect-history-api-fallback';
 
 const $ = gulpLoadPlugins();
 const reload = browserSync.reload;
@@ -134,7 +135,7 @@ gulp.task('serve', ['wiredep', 'styles'], () => {
       routes: {
         '/bower_components': 'bower_components'
       },
-      middleware: [proxy('http://localhost:8081/assets'), proxy('http://localhost:8082/api')]
+      middleware: [proxy('http://localhost:8081/assets'), proxy('http://localhost:8082/api'), historyApiFallback()]
     }
   });
 
