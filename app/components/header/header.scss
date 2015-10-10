@@ -2,7 +2,7 @@
   color: black;
 }
 
-.heading {
+.heading {  
     &_title {
       @extend %heading;
 
@@ -18,4 +18,8 @@
     font: 400 22px 'Anonymous Pro',monospace;
     margin: 0;
   }
+}
+
+a.wrap-heading {
+  text-decoration: none;
 }

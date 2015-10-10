@@ -17,3 +17,12 @@ export class FileAction extends Action {
     this.file = file;
   }
 }
+
+/**
+ * Вызывается при отсутствии файла в store и torcache
+ */
+export class NotFoundAction extends Action {
+  constructor() {
+    super(ActionTypes.FILE_NOT_FOUND);
+  }
+}

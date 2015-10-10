@@ -23,6 +23,9 @@ HistoryStore.dispatchToken = TorrentDispatcher.register(function (action) {
 				}
 			});
       break;
+		case ActionTypes.FILE_NOT_FOUND:
+			HistoryActionCreator.notFoundTorrent();
+			break;
     default:
       break;
   }

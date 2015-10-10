@@ -14,7 +14,12 @@ export function replaceTorrent(hash) {
 	history.replaceState(null, `/torrent/${hash}`);
 }
 
+export function notFoundTorrent() {
+	history.replaceState(null, `/torrent-not-found`);
+}
+
 export default {
 	navigateTorrent,
-	replaceTorrent
+	replaceTorrent,
+	notFoundTorrent
 }

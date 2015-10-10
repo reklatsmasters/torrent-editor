@@ -5,6 +5,7 @@ import Pane from '../editor-pane/pane';
 import PaneTorrent from '../pane-torrent/torrent';
 import TorrentStore from '../store/torrent-store';
 import { Link } from 'react-router';
+import TorrentActionCreator from '../action/torrent-action-creator';
 
 import './editor.scss';
 
@@ -56,6 +57,11 @@ export default class Editor extends Component {
   
   handleStoreChanged = () => {    
     var torrent = TorrentStore.getParsed();
+    
+    if (!torrent || (torrent.infoHash.toUpperCase() != this.props.params.hash)) {
+      return TorrentActionCreator.notFound();
+    }
+    
     this.setState({torrent});
   }
 
@@ -64,7 +70,7 @@ export default class Editor extends Component {
    
     return (
       <section className='editor'>
-        <Link to='/' activeStyle={{textDecoration: 'none'}} >
+        <Link to='/' activeClassName='wrap-heading' >
           <Header />
         </Link>
         <div className='editor-wrap'>
