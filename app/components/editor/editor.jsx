@@ -4,6 +4,7 @@ import Tab from '../editor-tab/tab';
 import Pane from '../editor-pane/pane';
 import PaneTorrent from '../pane-torrent/torrent';
 import TorrentStore from '../store/torrent-store';
+import { Link } from 'react-router';
 
 import './editor.scss';
 
@@ -63,7 +64,9 @@ export default class Editor extends Component {
    
     return (
       <section className='editor'>
-        <Header />        
+        <Link to='/' activeStyle={{textDecoration: 'none'}} >
+          <Header />
+        </Link>
         <div className='editor-wrap'>
           <div className='editor-tabs'>
             <Tab title='editor' active={this.state.pane == PANE_EDITOR} onClick={this.handleTabChange.bind(this, PANE_EDITOR)} />

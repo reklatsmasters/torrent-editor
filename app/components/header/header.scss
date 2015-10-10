@@ -1,11 +1,19 @@
+%heading {
+  color: black;
+}
+
 .heading {
     &_title {
+      @extend %heading;
+
       text-align: center;
       font: 400 70px 'Comfortaa', cursive;
-      margin: 0;
+      margin: 0;      
     }
   
   &_shortdesc {
+    @extend %heading;
+
     text-align: center;
     font: 400 22px 'Anonymous Pro',monospace;
     margin: 0;
