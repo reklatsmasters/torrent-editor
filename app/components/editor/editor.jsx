@@ -39,7 +39,7 @@ export default class Editor extends Component {
   }
   
   componentDidUpdate() {
-    Prism.highlightElement(React.findDOMNode(this.refs.code));
+    Prism.highlightElement(this.refs.code);
   }
   
   componentWillUnmount() {

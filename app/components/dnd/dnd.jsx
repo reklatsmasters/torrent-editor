@@ -16,7 +16,7 @@ export default class DnD extends Component {
   }
   
   componentDidMount() {
-    this.dragzone = React.findDOMNode(this.refs.dragzone);
+    this.dragzone = this.refs.dragzone;
   }
   
   // clear memory

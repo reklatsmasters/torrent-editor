@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import TorrentEditor from './router/router';
 
-React.render(<TorrentEditor />, document.getElementById('content')); // jshint ignore:line
+ReactDOM.render(<TorrentEditor />, document.getElementById('content')); // jshint ignore:line
