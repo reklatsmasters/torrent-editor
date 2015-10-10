@@ -1,0 +1,43 @@
+@mixin flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.overlay {
+  background: rgba(0,0,0,0.4);
+}
+
+.dragzone {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: 99;
+  box-sizing: border-box;
+  
+  top: 0;
+  left: 0;
+  
+  @include flex;
+  
+  &_drop {
+    width: 704px;
+    height: 504px;
+    background: rgba(#fff, 0.8);
+    border-radius: 38px;
+    border: 4px dashed rgba(#2f2f2f, 0.85);
+    
+    @include flex;
+    flex-direction: column;
+  }
+  
+  &_title {
+    font: 400 45px 'Anonymous Pro',monospace;
+    margin: 25px 0 0;
+  }
+  
+  svg {
+    width: 210px;
+    height: 237px;
+  }
+}

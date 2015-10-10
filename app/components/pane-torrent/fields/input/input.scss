@@ -1,0 +1,38 @@
+.torrent-input {
+  display: block;
+  height: 36px;
+    
+  border: 2px solid black;
+  border-left: none;
+  border-right: none;
+  
+  position: relative;
+  z-index: 1;
+  
+  input {
+    font: 400 17px 'Anonymous Pro',monospace;
+    text-align: center;
+    width: 100%;
+    border: none;
+    height: 100%;
+    outline: none;
+    box-sizing: border-box;
+  }
+  
+  span {
+    font: 400 13px/1 'Anonymous Pro',monospace;
+    background: #fff;
+    
+    position: absolute;
+    z-index: 2;
+    display: inline-block;
+    
+    top: -9px;
+    left: 27px;
+    
+    text-align: center;
+    padding: 0 13px;
+    box-sizing: border-box;
+    min-width: 84px;
+  }
+}

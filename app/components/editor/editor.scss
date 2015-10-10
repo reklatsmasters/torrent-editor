@@ -1,0 +1,22 @@
+.editor {
+  position: relative;
+  top: 58px;
+  
+  &-wrap {
+    width: 750px;
+    margin: 43px auto 0;
+  }
+  
+  &-tabs {
+    display: flex;
+    flex-direction: row;
+    
+    & > * {
+      border-bottom: none;
+    }
+    
+    & > :not(:last-child) {
+      border-right: none;
+    } 
+  }
+}

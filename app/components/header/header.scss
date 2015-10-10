@@ -1,0 +1,13 @@
+.heading {
+    &_title {
+      text-align: center;
+      font: 400 70px 'Comfortaa', cursive;
+      margin: 0;
+    }
+  
+  &_shortdesc {
+    text-align: center;
+    font: 400 22px 'Anonymous Pro',monospace;
+    margin: 0;
+  }
+}

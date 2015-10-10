@@ -1,0 +1,8 @@
+.editor-pane {
+  background: #fff;
+  border: 2px solid black;
+  
+  &--hidden {
+    display: none;
+  }
+}

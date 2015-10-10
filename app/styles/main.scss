@@ -1,0 +1,25 @@
+@import "./spinner";
+
+html {
+  height: 100%;
+}
+
+body {
+  @extend html;
+  background: #f0ffff;
+}
+
+// preloader component
+
+.preloader {
+  height: 100vh;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  &_icon {
+    font: 16px 400 monospace;
+    color: #333;
+  }
+}

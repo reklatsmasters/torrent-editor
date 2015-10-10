@@ -1,0 +1,12 @@
+.dnd {
+  position: relative;
+}
+
+/* мы отключаем все события от дочерних узлов
+ * для исправления проблемы с событием dragleave - 
+ * оно вызывается для всех дочерних узлов
+ * @link http://stackoverflow.com/questions/7110353/html5-dragleave-fired-when-hovering-a-child-element
+ */
+.dragging * {
+  pointer-events: none;
+}

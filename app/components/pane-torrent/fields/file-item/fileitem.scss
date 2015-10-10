@@ -1,0 +1,22 @@
+.file-item {
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+  border-left: none;
+  border-right: none;
+  font: 400 14px 'Anonymous Pro',monospace;
+  box-sizing: border-box;
+  text-indent: 40px;
+  
+  padding: 0 3px; 
+  height: 35px;
+  margin: 14px 0;
+  
+  display: flex;
+  align-items: center;
+  justify-content: space-between; 
+  
+  &_size {
+    text-align: right;
+    flex-shrink: 0;
+  }
+}

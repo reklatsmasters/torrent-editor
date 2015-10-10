@@ -1,0 +1,35 @@
+@mixin flexbox-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.pstart {
+  @include flexbox-center;  
+  flex-direction: column;
+
+  height: 100vh;
+  position: relative;
+}
+
+.choose {
+  input {
+    display: none;
+  }
+  
+  span {
+    font: 400 27px 'Anonymous Pro',monospace;
+  }
+  
+  cursor: pointer;
+  margin-top: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid;
+  
+  width: 280px;
+  height: 58px;
+  background: rgba(40, 176, 255, 0.6);
+}
