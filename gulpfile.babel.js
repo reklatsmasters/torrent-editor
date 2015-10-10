@@ -115,9 +115,16 @@ gulp.task('serve', ['wiredep', 'styles'], () => {
     publicPath: "/assets/",
   })
   
+  // assets server
   wpserver.listen(8081, 'localhost', function () {
     log('webpack dev server started on port 8081');
   });
+  
+  // api server
+  $.nodemon({
+    script: 'server/app.js',
+    watch: ['server/*.js']
+  })
 
   browserSync({
     notify: false,
@@ -127,7 +134,7 @@ gulp.task('serve', ['wiredep', 'styles'], () => {
       routes: {
         '/bower_components': 'bower_components'
       },
-      middleware: [proxy('http://localhost:8081/assets')]
+      middleware: [proxy('http://localhost:8081/assets'), proxy('http://localhost:8082/api')]
     }
   });
 

@@ -27,6 +27,7 @@
     "gulp-load-plugins": "^0.10.0",
     "gulp-minify-css": "^1.1.1",
     "gulp-minify-html": "^1.0.0",
+    "gulp-nodemon": "^2.0.4",
     "gulp-plumber": "^1.0.1",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.0.0",
@@ -72,12 +73,14 @@
     "es6-promise": "^3.0.2",
     "file-size": "^1.0.0",
     "flux": "^2.1.1",
+    "got": "^4.2.0",
     "history": "^1.12.4",
     "moment": "^2.10.6",
     "parse-torrent-file": "^3.2.1",
     "react": "^0.14.0",
     "react-dom": "^0.14.0",
     "react-router": "^1.0.0-rc3",
+    "restify": "^4.0.3",
     "xtend": "^4.0.0"
   }
 }
