@@ -8,7 +8,7 @@ import HistoryStore from './store/history-store';
 import NotFound from './404/not-found-hash';
 
 ReactDOM.render((
-	<Router history={HistoryStore}>
+	<Router history={HistoryStore.history}>
 		<Route path='/' component={TorrentEditor}>
 			<IndexRoute component={Landing} />
 			<Route path='torrent/:hash' component={Editor} />
