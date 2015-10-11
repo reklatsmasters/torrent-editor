@@ -26,3 +26,15 @@ export class NotFoundAction extends Action {
     super(ActionTypes.FILE_NOT_FOUND);
   }
 }
+
+/**
+ * Вызывается, когда необходимо загрузить торрент
+ * из внешнего источника
+ */
+export class PullTorrentAction extends Action {
+  constructor(infohash) {
+    super(ActionTypes.FILE_DOWNLOAD);
+    
+    this.infohash = infohash;
+  }
+}

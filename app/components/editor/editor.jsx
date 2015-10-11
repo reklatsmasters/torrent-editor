@@ -4,9 +4,9 @@ import Tab from '../editor-tab/tab';
 import Pane from '../editor-pane/pane';
 import PaneTorrent from '../pane-torrent/torrent';
 import TorrentStore from '../store/torrent-store';
+import TorcacheStore from '../store/torcache-store';
 import { Link } from 'react-router';
 import TorrentActionCreator from '../action/torrent-action-creator';
-
 import './editor.scss';
 
 /* global Prism */
@@ -34,10 +34,11 @@ export default class Editor extends Component {
     }
   }
   
-  componentDidMount() {
-    // init after load component  
-    this.handleStoreChanged();
+  componentDidMount() { 
+    this.initComponent();
+
     TorrentStore.sub(this.handleStoreChanged);
+    TorcacheStore.sub(this.handleTorcacheChanged);
   }
   
   componentDidUpdate() {
@@ -46,6 +47,7 @@ export default class Editor extends Component {
   
   componentWillUnmount() {
     TorrentStore.off(this.handleStoreChanged);
+    TorcacheStore.off(this.handleTorcacheChanged);
   }
   
   handleTabChange(pane, ev) {
@@ -55,11 +57,48 @@ export default class Editor extends Component {
     this.setState({pane});
   }
   
-  handleStoreChanged = () => {    
+  handleStoreChanged = () => {
     var torrent = TorrentStore.getParsed();
     
-    if (!torrent || (torrent.infoHash.toUpperCase() != this.props.params.hash)) {
+    if (!torrent) {
       return TorrentActionCreator.notFound();
+    }
+    
+    this.setState({torrent});
+  }
+  
+  handleTorcacheChanged = () => {
+    var torrent = TorcacheStore.getTorrent(this.props.params.hash);
+    
+    if (!torrent) {
+      return TorrentActionCreator.notFound();
+    }
+    
+    this.setState({torrent});
+  }
+  
+  initComponent = () => {
+    var torrent = TorrentStore.getParsed();
+
+    /**
+     * Для начала проверяем, есть ли запрашиваемый торрент в хранилище
+     * Если в D-n-D хранилище нет запрашиваемого торрента,
+     * пробуем загрузить с Torcache
+     * Если его и там нет - редиректим на 404
+     */
+    if (!torrent || (torrent.infoHash.toUpperCase() != this.props.params.hash)) {
+      let isLoaded = TorcacheStore.isLoaded(this.props.params.hash);
+      
+      if (!isLoaded) {
+        return TorrentActionCreator.pullTorrent(this.props.params.hash);
+      }
+      
+      torrent = TorcacheStore.getTorrent(this.props.params.hash);
+      
+      // loaded and not found
+      if (!torrent) {
+        return TorrentActionCreator.notFound();
+      }
     }
     
     this.setState({torrent});
