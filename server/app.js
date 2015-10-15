@@ -1,14 +1,19 @@
 'use strict';
 
 const restify = require('restify');
-const server = restify.createServer();
+const app = restify.createServer();
 const got = require('got');
 const parseTorrent = require('parse-torrent-file');
+const path = require('path');
+
+app.get(/\/s\/?.*/i, restify.serveStatic({
+	directory: path.join(__dirname, '../dist')
+}))
 
 /**
  * Download torrent from torcache and write to out
  */
-server.get('/api/torrent/:hash', (req, res, next) => {
+app.get('/api/torrent/:hash', (req, res, next) => {
 	var infohash = req.params.hash;
 	
 	var opts = {
@@ -31,6 +36,14 @@ server.get('/api/torrent/:hash', (req, res, next) => {
 	})
 })
 
-server.listen(process.env.PORT | 8082, () => {
-	console.log('%s listening at %s', server.name, server.url);
+/**
+ * For all other requests we send `index.html`
+ */
+app.get(/\/*/, restify.serveStatic({
+	directory: path.join(__dirname, '../dist'),
+	file: 'index.html'
+}))
+
+app.listen(process.env.PORT || 8082, () => {
+	console.log('%s listening at %s', app.name, app.url);
 })
