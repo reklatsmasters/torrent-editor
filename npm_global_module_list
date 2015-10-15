@@ -1,0 +1,8 @@
+#
+#  This file contains a list of globally installed and available npm modules.
+#
+
+gulp
+bower
+webpack
+babel

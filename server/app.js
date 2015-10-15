@@ -44,6 +44,6 @@ app.get(/\/*/, restify.serveStatic({
 	file: 'index.html'
 }))
 
-app.listen(process.env.PORT || 8082, () => {
+app.listen(process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8082, process.env.OPENSHIFT_NODEJS_IP || "::", () => {
 	console.log('%s listening at %s', app.name, app.url);
 })
