@@ -6,6 +6,8 @@ const got = require('got');
 const parseTorrent = require('parse-torrent-file');
 const path = require('path');
 
+app.use(restify.conditionalRequest());
+
 app.get(/\/s\/?.*/i, restify.serveStatic({
 	directory: path.join(__dirname, '../dist')
 }))
