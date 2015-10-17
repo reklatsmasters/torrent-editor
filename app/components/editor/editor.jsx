@@ -8,6 +8,8 @@ import TorcacheStore from '../store/torcache-store';
 import HistoryStore from '../store/history-store';
 import { Link } from 'react-router';
 import TorrentActionCreator from '../action/torrent-action-creator';
+import Share from '../share/share';
+
 import './editor.scss';
 
 /* global Prism */
@@ -127,9 +129,12 @@ export default class Editor extends Component {
           <Header />
         </Link>
         <div className='editor-wrap'>
-          <div className='editor-tabs'>
-            <Tab title='editor' active={this.state.pane == PANE_EDITOR} onClick={this.handleTabChange.bind(this, PANE_EDITOR)} />
-            <Tab title='json'   active={this.state.pane == PANE_JSON} onClick={this.handleTabChange.bind(this, PANE_JSON)} />
+          <div className='editor-tabs-pane'>
+            <div className='editor-tabs'>
+              <Tab title='editor' active={this.state.pane == PANE_EDITOR} onClick={this.handleTabChange.bind(this, PANE_EDITOR)} />
+              <Tab title='json'   active={this.state.pane == PANE_JSON} onClick={this.handleTabChange.bind(this, PANE_JSON)} />
+            </div>
+            <Share />
           </div>
           <div className='editor-panes'>
             <Pane active={this.state.pane == PANE_EDITOR}>

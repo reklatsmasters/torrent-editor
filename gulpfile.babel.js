@@ -235,7 +235,7 @@ gulp.task('browser', () => {
   ;
 });
 
-gulp.task('build', ['html', 'images'], () => {
+gulp.task('build', ['html'], () => {
   return gulp.src('dist/**/*').pipe($.size({title: 'build', gzip: true}));
 });
 

@@ -7,6 +7,12 @@
     margin: 43px auto 0;
   }
   
+  &-tabs-pane {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  
   &-tabs {
     display: flex;
     flex-direction: row;
