@@ -1,5 +1,5 @@
 {
-  "name":"torrent-editor",
+  "name": "torrent-editor",
   "version": "0.0.0",
   "scripts": {
     "start": "node ./server/app.js"
@@ -32,6 +32,7 @@
     "gulp-eslint": "^0.13.2",
     "gulp-if": "^1.2.5",
     "gulp-imagemin": "^2.2.1",
+    "gulp-inject": "^3.0.0",
     "gulp-load-plugins": "^0.10.0",
     "gulp-minify-css": "^1.1.1",
     "gulp-minify-html": "^1.0.0",

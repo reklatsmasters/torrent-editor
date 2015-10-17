@@ -72,7 +72,13 @@ gulp.task('lint', lint('app/scripts/**/*.js'));
 gulp.task('lint:test', lint('test/spec/**/*.js', testLintOptions));
 
 gulp.task('html', ['styles:dist', 'webpack'], () => {
-  const assets = $.useref.assets({searchPath: ['.tmp', 'app', '.']});
+  const assets = $.useref.assets({ searchPath: ['.tmp', 'app', '.'] });
+  const inject_opts = {
+    starttag: '<!-- inject:analytics -->',
+    transform: function (filePath, file) {
+      return file.contents.toString('utf8')
+    }
+  }
 
   return gulp.src('app/*.html')
     .pipe(assets)
@@ -80,6 +86,7 @@ gulp.task('html', ['styles:dist', 'webpack'], () => {
     .pipe($.if('*.css', $.minifyCss({compatibility: '*'})))
     .pipe(assets.restore())
     .pipe($.useref())
+    .pipe($.if('*.html', $.inject(gulp.src('analitics/*.html'), inject_opts)))
     .pipe($.if('*.html', $.minifyHtml({conditionals: true, empty: true})))
     .pipe(gulp.dest('dist'));
 });
