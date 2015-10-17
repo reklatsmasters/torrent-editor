@@ -134,7 +134,7 @@ export default class Editor extends Component {
               <Tab title='editor' active={this.state.pane == PANE_EDITOR} onClick={this.handleTabChange.bind(this, PANE_EDITOR)} />
               <Tab title='json'   active={this.state.pane == PANE_JSON} onClick={this.handleTabChange.bind(this, PANE_JSON)} />
             </div>
-            <Share />
+            <Share text={`Torrent Editor - ${this.state.torrent.name}`} url={location.href} />
           </div>
           <div className='editor-panes'>
             <Pane active={this.state.pane == PANE_EDITOR}>
