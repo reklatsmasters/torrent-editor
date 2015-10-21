@@ -5,6 +5,10 @@ const app = restify.createServer();
 const got = require('got');
 const parseTorrent = require('parse-torrent-file');
 const path = require('path');
+const Announce = require('bittorrent-tracker');
+const hat = require('hat');
+
+const peerID = hat(160);
 
 app.use(restify.conditionalRequest());
 
@@ -36,6 +40,31 @@ app.get('/api/torrent/:hash', (req, res, next) => {
 			return next(err);
 		}
 	})
+})
+
+app.get('/api/torrent/:hash/:tracker', (req, res, next) => {
+	var infoHash = req.params.hash;
+	var tracker = decodeURIComponent(req.params.tracker);
+
+	console.log(infoHash, tracker);
+		
+	// запрос
+	var client = new Announce(peerID, 6881, { infoHash, announce: [tracker] });
+
+	client.once('error', () => {
+		client.destroy();
+		res.send({ announce: tracker, complete: null, incomplete: null });
+	});
+	client.once('warning', () => {
+		client.destroy();
+		res.send({ announce: tracker, complete: null, incomplete: null });
+	});
+	client.once('scrape', (data) => {
+		client.destroy();
+		res.send(data);
+	});
+	
+	client.scrape();
 })
 
 /**

@@ -7,18 +7,16 @@ function Spinner(props) {
   return <span className='announce-spinner' dangerouslySetInnerHTML={{__html: icon_spinner}} />;
 }
 
-export default class AnnounceItem extends Component {
-  state = {
-    seeders: null,
-    leechers: null
-  }
-  
+export default class AnnounceItem extends Component { 
   static defaultProps = {
     tracker: null,
+    seeders: undefined,
+    leechers: undefined
   }
   
   hasData() {
-    return this.state.seeders !== null && this.state.leechers !== null;
+    return this.props.seeders !== undefined &&
+      this.props.leechers !== undefined;
   }
   
   render() {
@@ -27,7 +25,7 @@ export default class AnnounceItem extends Component {
         <span className='announce-item_tracker'>{this.props.tracker}</span>
         
         <span className='announce-item_stat'>
-          {this.hasData() ? `${this.state.seeders} / ${this.state.leechers}` : <Spinner />}
+          {this.hasData() ? `${this.props.seeders} / ${this.props.leechers }` : <Spinner />}
         </span>
       </div>
     );

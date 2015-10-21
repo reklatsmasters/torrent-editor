@@ -78,12 +78,14 @@
     }
   },
   "dependencies": {
+    "bittorrent-tracker": "reklatsmasters/bittorrent-tracker#client",
     "classnames": "^2.1.5",
     "debug": "^2.2.0",
     "es6-promise": "^3.0.2",
     "file-size": "^1.0.0",
     "flux": "^2.1.1",
     "got": "^4.2.0",
+    "hat": "0.0.3",
     "history": "^1.12.4",
     "moment": "^2.10.6",
     "parse-torrent-file": "^3.2.1",

@@ -17,14 +17,17 @@ const CHANGE = 'change';
 const TorcacheStore = assign({}, EventEmitter.prototype, {
 	/** private */
 	_store: {},
+	_fetchState: null,
 
 	_handlePullTorrent(infohash) {
-		fetch(`/api/torrent/${infohash}`)
+		this._fetchState = fetch(`/api/torrent/${infohash}`)
 			.then(this._handleSuccessFetch)
 			.then(this._parseTorrent)
 			.then((data) => {
 				this._store[data.infoHash.toUpperCase()] = data;
 				this._change();
+				
+				return data;
 			}).catch(() => {
 				/**
 				 * При ошибке всё равно сохраняем состояние
@@ -58,6 +61,10 @@ const TorcacheStore = assign({}, EventEmitter.prototype, {
 	},
 	
 	/** public */
+	
+	waitForFetchTorrent(success, fail) {
+		return this._fetchState.then(success, fail);
+	},
 	
 	getTorrent(infohash) {
 		return this._store[infohash.toUpperCase()];
